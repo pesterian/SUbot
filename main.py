@@ -90,9 +90,9 @@ async def list_complaints(ctx):
     embed = discord.Embed(title="All Complaints", color=0xFFB6C1)
     
     for complaint_id, data in complaints.items():
-        status = "✅ Replied" if data.get("replies") else "⏳ Pending"
+        status = "Replied" if data.get("replies") else "Pending"
         embed.add_field(
-            name=f"ID: {complaint_id} - {data['title']} {status}",
+            name=f"ID: {complaint_id} - {data['title']} [{status}]",
             value=data['description'][:100] + ("..." if len(data['description']) > 100 else ""),
             inline=False
         )
@@ -142,7 +142,7 @@ async def edit_complaint(ctx):
             complaints[complaint_id]["description"] = desc_msg.content
         
         save_complaints(complaints)
-        await ctx.send(f"Complaint `{complaint_id}` has been updated! 💕")
+        await ctx.send(f"Complaint `{complaint_id}` has been updated!")
         
     except asyncio.TimeoutError:
         await ctx.send("Took too long to respond! Try again when you're ready")
@@ -178,7 +178,7 @@ async def delete_complaint(ctx):
         del complaints[complaint_id]
         save_complaints(complaints)
         
-        await ctx.send(f"Complaint `{complaint_id}` - '{title}' has been deleted! 🗑️")
+        await ctx.send(f"Complaint `{complaint_id}` - '{title}' has been deleted!")
         
     except asyncio.TimeoutError:
         await ctx.send("Took too long to respond! Try again when you're ready")
@@ -236,7 +236,7 @@ async def reply_to_complaint(ctx):
         embed.set_footer(text=f"Complaint ID: {complaint_id}")
         
         await ctx.send(embed=embed)
-        await ctx.send(f"{complainer.mention} Your complaint has been addressed! 💕")
+        await ctx.send(f"{complainer.mention} Your complaint has been addressed!")
         
     except asyncio.TimeoutError:
         await ctx.send("Took too long to respond! Try again when you're ready")
